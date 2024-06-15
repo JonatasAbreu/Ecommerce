@@ -147,6 +147,35 @@ namespace Ecommerce.Admin
 
 
             }
+
+            if (e.CommandName == "delete")
+            {
+                con = new SqlConnection(Utils.getConnection());
+                cmd = new SqlCommand("CATEGORY_CRUD", con);
+
+                cmd.Parameters.AddWithValue("@ACAO", "DELETE");
+                cmd.Parameters.AddWithValue("@ID_CATEGORIA", e.CommandArgument);
+                cmd.CommandType = CommandType.StoredProcedure;
+                
+                try
+                {
+                    con.Open();
+                    cmd.ExecuteNonQuery(); 
+                    lblMsg.Visible = true;
+                    lblMsg.Text = "Categoria deletada com sucesso!";
+                    lblMsg.CssClass = "alert alert-danger";
+                    getCategories();
+                 
+                }
+                catch(Exception ex)
+                {
+                    lblMsg.Visible = true;
+                    lblMsg.Text = "Error - " + ex.Message;
+                    lblMsg.CssClass = "alert alert-danger";
+                }
+                finally { con.Close(); }
+
+            }
         }
     }
 }

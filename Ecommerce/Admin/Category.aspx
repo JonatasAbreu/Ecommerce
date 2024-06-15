@@ -121,7 +121,8 @@
                                             CommandArgument='<%# Eval("ID_CATEGORIA") %>' CommandName="edit" CausesValidation="false">
                                             <i class="fas fa-edit"></i>
                                         </asp:LinkButton>
-                                         <asp:LinkButton ID="lbDelete" Text="Excluir" runat="server" CssClass="badge badge-danger">
+                                         <asp:LinkButton ID="lbDelete" Text="Excluir" runat="server" CssClass="badge badge-danger"
+                                             CommandArgument='<%# Eval("ID_CATEGORIA") %>' CommandName="delete" CausesValidation="false">
                                             <i class="fas fa-trash"></i>
                                         </asp:LinkButton>
                                     </td>
