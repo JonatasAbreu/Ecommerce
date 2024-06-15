@@ -20,6 +20,24 @@ namespace Ecommerce.Admin
         protected void Page_Load(object sender, EventArgs e)
         {
             lblMsg.Visible = false;
+            getCategories();
+        }
+
+        void getCategories()
+        {
+            con = new SqlConnection(Utils.getConnection());
+            cmd = new SqlCommand("CATEGORY_CRUD", con);
+
+            cmd.Parameters.AddWithValue("@ACAO", "GETALL");
+            cmd.CommandType = CommandType.StoredProcedure;
+            sda = new SqlDataAdapter(cmd);
+            dt = new DataTable();
+            sda.Fill(dt);
+            rCategory.DataSource = dt;
+            rCategory.DataBind();
+
+
+           
         }
 
         protected void btnAddOrUpdate_Click(object sender, EventArgs e)
@@ -59,7 +77,7 @@ namespace Ecommerce.Admin
             }
             else
             {
-                isValidToExecute = false;
+                isValidToExecute = true;
             }
 
             if (isValidToExecute)
@@ -73,6 +91,8 @@ namespace Ecommerce.Admin
                     lblMsg.Visible = true;
                     lblMsg.Text = "Categoria " + actionName + " com sucesso";
                     lblMsg.CssClass = "alert alert-danger";
+                    getCategories();
+                    clear();
 
                 }
                 catch (Exception ex)
@@ -101,6 +121,32 @@ namespace Ecommerce.Admin
             btnAddOrUpdate.Text = "Adicionar";
             imagePreview.ImageUrl = string.Empty;
 
+        }
+
+        protected void rCategory_ItemCommand(object source, RepeaterCommandEventArgs e)
+        {
+            lblMsg.Visible = false;
+            if(e.CommandName == "edit")
+            {
+                con = new SqlConnection(Utils.getConnection());
+                cmd = new SqlCommand("CATEGORY_CRUD", con);
+
+                cmd.Parameters.AddWithValue("@ACAO", "GETBYID");
+                cmd.Parameters.AddWithValue("@ID_CATEGORIA", e.CommandArgument);
+                cmd.CommandType = CommandType.StoredProcedure;
+                sda = new SqlDataAdapter(cmd);
+                dt = new DataTable();
+                sda.Fill(dt);
+                txtCategoryName.Text = dt.Rows[0]["NM_CATEGORIA"].ToString();
+                cbIsActive.Checked = Convert.ToBoolean(dt.Rows[0]["FL_ATIVA"]);
+                imagePreview.ImageUrl = string.IsNullOrEmpty(dt.Rows[0]["IMG_URL_CATEGORIA"].ToString()) ? "../Images/No_image.png" : "../" + dt.Rows[0]["IMG_URL_CATEGORIA"].ToString();
+                imagePreview.Height = 200;
+                imagePreview.Width = 200;
+                hfCategoryId.Value = dt.Rows[0]["ID_CATEGORIA"].ToString();
+                btnAddOrUpdate.Text = "Atualizar";
+
+
+            }
         }
     }
 }
