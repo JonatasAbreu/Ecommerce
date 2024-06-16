@@ -603,6 +603,7 @@
     <Content Include="Admin\Contact.aspx" />
     <Content Include="Admin\Dashboard.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="Images\No_image.png" />
     <Content Include="UserTemplate\css\style.css" />
     <Content Include="UserTemplate\css\style.min.css" />
     <Content Include="UserTemplate\img\carousel-1.jpg" />

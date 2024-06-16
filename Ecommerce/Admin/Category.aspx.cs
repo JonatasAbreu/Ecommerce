@@ -19,6 +19,8 @@ namespace Ecommerce.Admin
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            Session["breadCumbTitle"] = "Manage Category";
+            Session["breadCumbPage"] = "Category";
             lblMsg.Visible = false;
             getCategories();
         }

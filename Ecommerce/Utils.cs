@@ -51,7 +51,8 @@ namespace Ecommerce
             string url1 = string.Empty;
             if (string.IsNullOrEmpty(url.ToString()) || url == DBNull.Value)
             {
-                url1 = ".../Image/No_image.png";
+                url1 = "../Images/No_image.png";
+
             }
             else
             {
